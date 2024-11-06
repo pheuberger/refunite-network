@@ -12,7 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useHatsClient } from "@/hooks/useHatsClient";
 
 export default function AssignHatPage() {
-  const { address: account } = useAccount();
+  const { address: account, isConnected } = useAccount();
   const [recipient, setRecipient] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +66,18 @@ export default function AssignHatPage() {
       setIsLoading(false);
     }
   };
+
+  if (!isConnected) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-4 bg-background">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-4">Assign Hat</h1>
+          <p className="text-base mb-6">Please connect your wallet to assign a hat.</p>
+          <Button>Connect Wallet</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 md:p-8">
